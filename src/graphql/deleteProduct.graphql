@@ -1,0 +1,22 @@
+mutation DeleteProduct($input: DeleteInput) {
+  deleteProduct(input: $input) {
+    _id
+    name
+    imageUrl
+    location
+    price
+    description
+    rating
+    startAt
+    endAt
+    duration
+    facilities
+    informations {
+      runDown {
+        description
+        title
+      }
+      note
+    }
+  }
+}

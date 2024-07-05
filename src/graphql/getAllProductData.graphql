@@ -1,0 +1,22 @@
+query GetAllTravel {
+  getAllTravel {
+    _id
+    name
+    imageUrl
+    location
+    price
+    description
+    rating
+    startAt
+    endAt
+    duration
+    facilities
+    informations {
+      runDown {
+        title
+        description
+      }
+      note
+    }
+  }
+}
