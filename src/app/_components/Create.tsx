@@ -95,7 +95,7 @@ export const Create = () => {
         <div>
           <label
             htmlFor="file-upload"
-            className="custom-file-upload w-[600px] h-[500px] border-2 border-solid rounded-xl flex items-center justify-center border-[#be9131]"
+            className="custom-file-upload w-[600px] h-[500px] border-2 border-solid rounded-xl flex items-center justify-center border-[#1963E6]"
           >
             {imageUrl ? (
               <img src={imageUrl} alt="uploaded" />
@@ -115,52 +115,52 @@ export const Create = () => {
           onChange={(e) => setName(e.target.value)}
           value={name}
           placeholder="Name"
-          className="w-[400px] h-10 border-2 border-black rounded-xl p-2"
+          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
         />
         <input
           onChange={(e) => setLocation(e.target.value)}
           value={location}
           placeholder="Location"
-          className="w-[400px] h-10 border-2 border-black rounded-xl p-2"
+          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
         />
         <input
           onChange={(e) => setPrice(parseFloat(e.target.value))}
           value={price !== undefined ? price.toString() : ""}
           placeholder="Price"
-          className="w-[400px] h-10 border-2 border-black rounded-xl p-2"
+          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
           type="number"
         />
         <input
           onChange={(e) => setRating(parseFloat(e.target.value))}
           value={rating !== undefined ? rating.toString() : ""}
           placeholder="Price"
-          className="w-[400px] h-10 border-2 border-black rounded-xl p-2"
+          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
           type="number"
         />
         <input
           onChange={(e) => setDescription(e.target.value)}
           value={description}
           placeholder="Description"
-          className="w-[400px] h-10 border-2 border-black rounded-xl p-2"
+          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
         />
         <div className="flex gap-4">
           <input
             onChange={(e) => setStartAt(e.target.value)}
             value={startAt}
             placeholder="Start at"
-            className="w-[130px] h-10 border-2 border-black rounded-xl p-2"
+            className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
           />
           <input
             onChange={(e) => setEndAt(e.target.value)}
             value={endAt}
             placeholder="End at"
-            className="w-[130px] h-10 border-2 border-black rounded-xl p-2"
+            className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
           />
           <input
             onChange={(e) => setDuration(e.target.value)}
             value={duration}
             placeholder="Duration"
-            className="w-[130px] h-10 border-2 border-black rounded-xl p-2"
+            className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
           />
         </div>
         <div className="w-[600px] flex flex-wrap">
@@ -172,8 +172,8 @@ export const Create = () => {
               <button
                 key={facility}
                 onClick={() => handleFacilities(facility)}
-                className={`px-2 py-1 h-10 rounded-xl text-white ${
-                  facilities.includes(facility) ? "bg-blue-500" : "bg-black"
+                className={`px-2 py-1 h-10 rounded-xl  text-[12px] ${
+                  facilities.includes(facility) ? "bg-[#1963E6] text-white" : "bg-[#C6D5F0] text-[#1963E6]"
                 }`}
               >
                 {facility}
@@ -183,13 +183,13 @@ export const Create = () => {
         </div>
         <button
           onClick={handleCreateProduct}
-          className="rounded-2xl bg-black text-white py-2 px-4"
+          className="rounded-2xl bg-[#1963E6] text-white py-2 px-4"
         >
           Create
         </button>
       </div>
       <div className="mt-10">
-        <h2 className="text-black">Informations</h2>
+        <h2 className="text-[#1963E6]">Informations</h2>
         {informations.runDown.map((item, index) => (
           <div key={index} className="mb-4">
             <input
@@ -199,7 +199,7 @@ export const Create = () => {
               onChange={(e) =>
                 handleRunDownChange(index, "title", e.target.value)
               }
-              className="w-[300px] h-10 border-2 border-black rounded-xl p-2"
+              className="w-[300px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
             />
             <textarea
               value={item.description}
@@ -207,7 +207,7 @@ export const Create = () => {
               onChange={(e) =>
                 handleRunDownChange(index, "description", e.target.value)
               }
-              className="w-[400px] h-20 border-2 border-black rounded-xl p-2"
+              className="w-[400px] h-20 border-2 border-[#1963E6] rounded-xl p-2"
             />
           </div>
         ))}
@@ -218,7 +218,7 @@ export const Create = () => {
               runDown: [...prev.runDown, { title: "", description: "" }],
             }))
           }
-          className="rounded-2xl bg-black text-white py-2 px-4 mt-2"
+          className="rounded-2xl bg-[#1963E6] text-white py-2 px-4 mt-2"
         >
           Add Run Down
         </button>

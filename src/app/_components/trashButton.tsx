@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useProduct } from "@/context/productProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useDeleteProductMutation } from "@/generated";
@@ -20,9 +21,11 @@ type PropsType = {
   // RemoveTodo: (title: string) => void;
 };
 export function TrashButton(props: PropsType) {
+  const{refetch}=useProduct()
   const [handleDeleteProduct, { data, loading, error }] =
     useDeleteProductMutation();
   const { name, id } = props;
+
   //   // const { refetch } = useDeletedTodo();
   //   const [deleteTodo, { data }] = useDeleteTodoFromTrashMutation();
   const HandleRemove = async () => {
@@ -30,7 +33,11 @@ export function TrashButton(props: PropsType) {
       id: id,
     };
     try {
-      await handleDeleteProduct({ variables: { input: deleteInput } });
+      await handleDeleteProduct({ variables: { input: deleteInput } }).then((res)=>{
+        if(res){
+          refetch()
+        }
+      })
     } catch (err) {
       console.log(err);
     }

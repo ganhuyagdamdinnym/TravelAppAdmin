@@ -16,7 +16,13 @@ export default function Home() {
   // }
   return (
     <div className=" flex flex-row w-screen h-screen">
-      <div className="h-screen w-80 border-r-[1px] border-[#1963E6] flex flex-col gap-2 items-center pt-40">
+      <div className="h-screen w-80 border-r-[1px] border-[#1963E6] ">
+        <div className="w-full h-40 flex justify-center items-center">
+           <p className="font-semibold text-[20px] text-[#1963E6]">
+            Travel Dashboard
+           </p>
+        </div>
+        <div className="w-full h-full flex flex-col gap-2 items-center mt-40">
         <button
           onClick={() => setIsClickCreate(false)}
           className={` ${
@@ -37,6 +43,8 @@ export default function Home() {
         >
           Create product
         </button>
+        </div>
+       
       </div>
       <div className="pt-10 w-full ">
         <div className="w-full h-10 border-b-[1px] border-[#1963E6]"></div>
