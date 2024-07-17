@@ -1,7 +1,11 @@
 "use client";
 import { useCreateTravelMutation } from "@/generated";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { facilitiesData, facilitiesType } from "../assets/facilities";
+import { DatePickerWithRange } from "./DatePick";
 type RunDown = {
   title: string;
   description: string;
@@ -10,7 +14,6 @@ type Informations = {
   runDown: Array<RunDown>;
   note: string;
 };
-
 export const Create = () => {
   const [createProduct, { data, loading, error }] = useCreateTravelMutation();
   const [name, setName] = useState<string>("");
@@ -28,8 +31,6 @@ export const Create = () => {
     runDown: [{ title: "", description: "" }],
     note: "",
   });
-  const [runDown, setRunDown] = useState<number>(1);
-
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -91,7 +92,7 @@ export const Create = () => {
 
   return (
     <div className="w-full h-screen flex flex-row ">
-      <div className=" flex items-center gap-6 flex-col p-8">
+      <div className=" flex  gap-6  p-8">
         <div>
           <label
             htmlFor="file-upload"
@@ -111,117 +112,112 @@ export const Create = () => {
             className="hidden"
           />
         </div>
-        <input
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          placeholder="Name"
-          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
-        />
-        <input
-          onChange={(e) => setLocation(e.target.value)}
-          value={location}
-          placeholder="Location"
-          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
-        />
-        <input
-          onChange={(e) => setPrice(parseFloat(e.target.value))}
-          value={price !== undefined ? price.toString() : ""}
-          placeholder="Price"
-          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
-          type="number"
-        />
-        <input
-          onChange={(e) => setRating(parseFloat(e.target.value))}
-          value={rating !== undefined ? rating.toString() : ""}
-          placeholder="Price"
-          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
-          type="number"
-        />
-        <input
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-          placeholder="Description"
-          className="w-[400px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
-        />
-        <div className="flex gap-4">
-          <input
-            onChange={(e) => setStartAt(e.target.value)}
-            value={startAt}
-            placeholder="Start at"
-            className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
+        <div className=" flex items-center gap-6 flex-col w-[500px]">
+          <Input
+            type="string"
+            placeholder="Product name"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
           />
-          <input
-            onChange={(e) => setEndAt(e.target.value)}
-            value={endAt}
-            placeholder="End at"
-            className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
+          <Input
+            onChange={(e) => setLocation(e.target.value)}
+            value={location}
+            placeholder="Location"
           />
-          <input
-            onChange={(e) => setDuration(e.target.value)}
-            value={duration}
-            placeholder="Duration"
-            className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
+          <Input
+            onChange={(e) => setPrice(parseFloat(e.target.value))}
+            value={price !== undefined ? price.toString() : ""}
+            placeholder="Price"
+            type="number"
           />
-        </div>
-        <div className="w-[600px] flex flex-wrap">
-          <h1 className="w-full justify-center flex text-[20px]">
-            Please choose facilities
-          </h1>
-          <div className="w-full flex flex-row gap-2 flex-wrap justify-center">
-            {facilitiesData.map((facility) => (
-              <button
-                key={facility}
-                onClick={() => handleFacilities(facility)}
-                className={`px-2 py-1 h-10 rounded-xl  text-[12px] ${
-                  facilities.includes(facility) ? "bg-[#1963E6] text-white" : "bg-[#C6D5F0] text-[#1963E6]"
-                }`}
-              >
-                {facility}
-              </button>
-            ))}
-          </div>
-        </div>
-        <button
-          onClick={handleCreateProduct}
-          className="rounded-2xl bg-[#1963E6] text-white py-2 px-4"
-        >
-          Create
-        </button>
-      </div>
-      <div className="mt-10">
-        <h2 className="text-[#1963E6]">Informations</h2>
-        {informations.runDown.map((item, index) => (
-          <div key={index} className="mb-4">
+          <Input
+            onChange={(e) => setRating(parseFloat(e.target.value))}
+            value={rating !== undefined ? rating.toString() : ""}
+            placeholder="Price"
+            type="number"
+          />
+          <Input
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            placeholder="Description"
+          />
+          <div className="flex gap-4">
+            <DatePickerWithRange
+              startAt={startAt}
+              setStartAt={setStartAt}
+              endAt={endAt}
+              setEndAt={setEndAt}
+            />
             <input
+              onChange={(e) => setDuration(e.target.value)}
+              value={duration}
+              placeholder="Duration"
+              className="w-[130px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
+            />
+          </div>
+          <div className="w-[600px] flex flex-wrap">
+            <h1 className="w-full justify-center flex text-[20px]">
+              Please choose facilities
+            </h1>
+            <div className="w-full flex flex-row gap-2 flex-wrap justify-center">
+              {facilitiesData.map((facility) => (
+                <div>
+                  {facilities.includes(facility) ? (
+                    <Button
+                      key={facility}
+                      onClick={() => handleFacilities(facility)}
+                    >
+                      {facility}
+                    </Button>
+                  ) : (
+                    <Button
+                      key={facility}
+                      onClick={() => handleFacilities(facility)}
+                      variant="secondary"
+                    >
+                      {facility}
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <Button onClick={handleCreateProduct}>Create</Button>
+        </div>
+      </div>
+      <div className="mt-6 flex flex-col gap-4">
+        <h2>Informations</h2>
+        {informations.runDown.map((item, index) => (
+          <div key={index} className="mb-4 flex flex-col gap-2">
+            {index + 1}
+            <Input
               type="text"
               value={item.title}
               placeholder="Title"
               onChange={(e) =>
                 handleRunDownChange(index, "title", e.target.value)
               }
-              className="w-[300px] h-10 border-2 border-[#1963E6] rounded-xl p-2"
+              className="w-96"
             />
-            <textarea
+            <Textarea
               value={item.description}
               placeholder="Description"
               onChange={(e) =>
                 handleRunDownChange(index, "description", e.target.value)
               }
-              className="w-[400px] h-20 border-2 border-[#1963E6] rounded-xl p-2"
             />
           </div>
         ))}
-        <button
+        <Button
           onClick={() =>
             setInformations((prev) => ({
               ...prev,
               runDown: [...prev.runDown, { title: "", description: "" }],
             }))
           }
-          className="rounded-2xl bg-[#1963E6] text-white py-2 px-4 mt-2"
         >
           Add Run Down
-        </button>
+        </Button>
       </div>
     </div>
   );

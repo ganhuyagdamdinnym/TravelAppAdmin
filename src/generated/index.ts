@@ -29,6 +29,10 @@ export type DeleteInput = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Id = {
+  id: Scalars['String']['input'];
+};
+
 export type Info = {
   __typename?: 'Info';
   note?: Maybe<Scalars['String']['output']>;
@@ -70,7 +74,13 @@ export type MutationUpdateUserInfoArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  get1Product?: Maybe<Travel>;
   getAllTravel?: Maybe<Array<Travel>>;
+};
+
+
+export type QueryGet1ProductArgs = {
+  input?: InputMaybe<Id>;
 };
 
 export type RunDownInput = {
@@ -139,6 +149,13 @@ export type GetAllTravelQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllTravelQuery = { __typename?: 'Query', getAllTravel?: Array<{ __typename?: 'Travel', _id: string, name: string, imageUrl: string, location: string, price: number, description: string, rating: number, startAt: string, endAt: string, duration: string, facilities?: Array<string> | null, informations: { __typename?: 'Info', note?: string | null, runDown?: Array<{ __typename?: 'runDown', title?: string | null, description?: string | null }> | null } }> | null };
+
+export type Get1ProductQueryVariables = Exact<{
+  input?: InputMaybe<Id>;
+}>;
+
+
+export type Get1ProductQuery = { __typename?: 'Query', get1Product?: { __typename?: 'Travel', _id: string, name: string, imageUrl: string, location: string, price: number, description: string, rating: number, startAt: string, endAt: string, duration: string, facilities?: Array<string> | null, informations: { __typename?: 'Info', note?: string | null, runDown?: Array<{ __typename?: 'runDown', description?: string | null, title?: string | null }> | null } } | null };
 
 
 export const CreateTravelDocument = gql`
@@ -336,3 +353,73 @@ export type GetAllTravelQueryHookResult = ReturnType<typeof useGetAllTravelQuery
 export type GetAllTravelLazyQueryHookResult = ReturnType<typeof useGetAllTravelLazyQuery>;
 export type GetAllTravelSuspenseQueryHookResult = ReturnType<typeof useGetAllTravelSuspenseQuery>;
 export type GetAllTravelQueryResult = Apollo.QueryResult<GetAllTravelQuery, GetAllTravelQueryVariables>;
+export const Get1ProductDocument = gql`
+    query Get1Product($input: Id) {
+  get1Product(input: $input) {
+    _id
+    name
+    imageUrl
+    location
+    price
+    description
+    rating
+    startAt
+    endAt
+    duration
+    facilities
+    informations {
+      note
+      runDown {
+        description
+        title
+      }
+    }
+  }
+}
+    `;
+export type Get1ProductProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<Get1ProductQuery, Get1ProductQueryVariables>
+    } & TChildProps;
+export function withGet1Product<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  Get1ProductQuery,
+  Get1ProductQueryVariables,
+  Get1ProductProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, Get1ProductQuery, Get1ProductQueryVariables, Get1ProductProps<TChildProps, TDataName>>(Get1ProductDocument, {
+      alias: 'get1Product',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGet1ProductQuery__
+ *
+ * To run a query within a React component, call `useGet1ProductQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGet1ProductQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGet1ProductQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useGet1ProductQuery(baseOptions?: Apollo.QueryHookOptions<Get1ProductQuery, Get1ProductQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Get1ProductQuery, Get1ProductQueryVariables>(Get1ProductDocument, options);
+      }
+export function useGet1ProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Get1ProductQuery, Get1ProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Get1ProductQuery, Get1ProductQueryVariables>(Get1ProductDocument, options);
+        }
+export function useGet1ProductSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<Get1ProductQuery, Get1ProductQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<Get1ProductQuery, Get1ProductQueryVariables>(Get1ProductDocument, options);
+        }
+export type Get1ProductQueryHookResult = ReturnType<typeof useGet1ProductQuery>;
+export type Get1ProductLazyQueryHookResult = ReturnType<typeof useGet1ProductLazyQuery>;
+export type Get1ProductSuspenseQueryHookResult = ReturnType<typeof useGet1ProductSuspenseQuery>;
+export type Get1ProductQueryResult = Apollo.QueryResult<Get1ProductQuery, Get1ProductQueryVariables>;

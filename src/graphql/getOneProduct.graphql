@@ -1,0 +1,22 @@
+query Get1Product($input: Id) {
+  get1Product(input: $input) {
+    _id
+    name
+    imageUrl
+    location
+    price
+    description
+    rating
+    startAt
+    endAt
+    duration
+    facilities
+    informations {
+      note
+      runDown {
+        description
+        title
+      }
+    }
+  }
+}
