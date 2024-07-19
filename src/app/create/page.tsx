@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { facilitiesData, facilitiesType } from "../assets/facilities";
-import { DatePickerWithRange } from "./DatePick";
+import { DatePickerWithRange } from "../_components/DatePick";
+import { Card } from "@/components/ui/card";
 type RunDown = {
   title: string;
   description: string;
@@ -14,7 +15,7 @@ type Informations = {
   runDown: Array<RunDown>;
   note: string;
 };
-export const Create = () => {
+const Create = () => {
   const [createProduct, { data, loading, error }] = useCreateTravelMutation();
   const [name, setName] = useState<string>("");
   const [location, setLocation] = useState<string>("");
@@ -24,22 +25,50 @@ export const Create = () => {
   const [startAt, setStartAt] = useState<string>("");
   const [endAt, setEndAt] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<File | undefined>();
+  const [uploadedImageUrl, setUploadedImageuRL] = useState<string>("");
   const [base64, setBase64] = useState<string>("");
   const [facilities, setFacilities] = useState<facilitiesType>([]);
   const [informations, setInformations] = useState<Informations>({
     runDown: [{ title: "", description: "" }],
     note: "",
   });
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setImageUrl(event.target?.result as string);
-      setBase64(event.target?.result as string);
-    };
-    reader.readAsDataURL(file);
+    if (file) {
+      setImageUrl(file);
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setBase64(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const sendImageHandler = async () => {
+    if (imageUrl) {
+      const formData = new FormData();
+      formData.append("file", imageUrl);
+      try {
+        const res = await fetch("http://localhost:8080/api/uploadImage", {
+          method: "POST",
+          //   headers: {
+          //     "Content-Type": "multipart/form-data",
+          //   },
+          body: formData,
+        });
+        const response = await res.json();
+        console.log("res", response);
+        console.log("hhaaa", response.url);
+        setUploadedImageuRL(response.uploadUrl);
+      } catch (err) {
+        console.log("err");
+      }
+      //   const response = await res.json();
+      //   console.log(response);
+      // setUploadedImage(response.url);
+      // setLoading(false);
+    }
   };
 
   const handleFacilities = (facility: string) => {
@@ -62,7 +91,7 @@ export const Create = () => {
       endAt,
       duration,
       facilities,
-      imageUrl: base64,
+      imageUrl: uploadedImageUrl,
       rating,
       informations,
     };
@@ -92,26 +121,29 @@ export const Create = () => {
 
   return (
     <div className="w-full h-screen flex flex-row ">
-      <div className=" flex  gap-6  p-8">
+      <div className=" flex gap-6  p-8">
         <div>
-          <label
-            htmlFor="file-upload"
-            className="custom-file-upload w-[600px] h-[500px] border-2 border-solid rounded-xl flex items-center justify-center border-[#1963E6]"
-          >
-            {imageUrl ? (
-              <img src={imageUrl} alt="uploaded" />
-            ) : (
-              <img src="camera.svg" alt="photo" height={50} width={50} />
-            )}
-          </label>
+          <Card>
+            <label
+              htmlFor="file-upload"
+              className="custom-file-upload w-[600px] h-[500px] rounded-xl flex items-center justify-center "
+            >
+              {imageUrl ? (
+                <img src={base64} alt="uploaded" />
+              ) : (
+                <img src="camera.svg" alt="photo" height={50} width={50} />
+              )}
+            </label>
+          </Card>
           <input
-            onChange={handleImageUpload}
+            onChange={handleImageChange}
             id="file-upload"
             type="file"
             accept=".png, .jpg, .jpeg, .webp"
             className="hidden"
           />
         </div>
+        <button onClick={sendImageHandler}>upload</button>
         <div className=" flex items-center gap-6 flex-col w-[500px]">
           <Input
             type="string"
@@ -222,3 +254,5 @@ export const Create = () => {
     </div>
   );
 };
+
+export default Create;

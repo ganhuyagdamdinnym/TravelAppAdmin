@@ -47,9 +47,9 @@ export type InformationInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTravel?: Maybe<Travel>;
-  createUser?: Maybe<User>;
+  createUser: User;
   deleteProduct?: Maybe<Travel>;
-  updateUserInfo?: Maybe<User>;
+  updateUserInfo: User;
 };
 
 
@@ -75,6 +75,7 @@ export type MutationUpdateUserInfoArgs = {
 export type Query = {
   __typename?: 'Query';
   get1Product?: Maybe<Travel>;
+  getAllCustomers?: Maybe<Scalars['String']['output']>;
   getAllTravel?: Maybe<Array<Travel>>;
 };
 

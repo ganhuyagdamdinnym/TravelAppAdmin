@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Header } from "./_components/Header";
 import ApolloProviders from "@/context/apolloProvider";
 import ProdctProvider from "@/context/productProvider";
 const inter = Inter({ subsets: ["latin"] });
@@ -19,7 +20,12 @@ export default function RootLayout({
     <ApolloProviders>
       <ProdctProvider>
         <html lang="en">
-          <body className={inter.className}>{children}</body>
+          <body className={inter.className}>
+            <div className="w-screen flex">
+              <Header />
+              <main>{children}</main>
+            </div>
+          </body>
         </html>
       </ProdctProvider>
     </ApolloProviders>
