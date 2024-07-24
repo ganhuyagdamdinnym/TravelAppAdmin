@@ -10,6 +10,8 @@ import {
 import { useProduct } from "@/context/productProvider";
 import { TrashButton } from "./trashButton";
 import { EdithButton } from "./EditButton";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardHeader,
@@ -17,18 +19,45 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { CldImage } from "next-cloudinary";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
 export function Products() {
-  const { products } = useProduct();
+  const { products, setProducts, products2 } = useProduct();
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (search === "") {
+      setProducts(products2);
+    } else {
+      const result = products2.filter((el) =>
+        el?.name.toLowerCase().includes(search.toLowerCase())
+      );
+      setProducts(result);
+    }
+  }, [search]);
 
   return (
-    <div className="w-full">
-      <Card x-chunk="dashboard-02-chunk-0" className="w-40">
-        <CardHeader className="p-2 pt-0 md:p-4">
-          <CardTitle>{products.length} </CardTitle>
-          <CardDescription>Total Products</CardDescription>
-        </CardHeader>
-      </Card>
+    <div
+      className="w-full ml-[280px] mt-[60px] overflow-scroll"
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+    >
+      <div className="flex justify-between">
+        <Card x-chunk="dashboard-02-chunk-0" className="w-40">
+          <CardHeader className="p-2 pt-0 md:p-4">
+            <CardTitle>{products?.length} </CardTitle>
+            <CardDescription>Total Products</CardDescription>
+          </CardHeader>
+        </Card>
+        <div className="flex w-full max-w-sm items-center space-x-2 mr-[200px]">
+          <Input
+            type="search"
+            placeholder="Search by name"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
       <Table className="mt-10">
         <TableHeader>
           <TableRow>

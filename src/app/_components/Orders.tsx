@@ -69,7 +69,7 @@ export function Orders() {
             <TabsContent value="all">
               <Card x-chunk="dashboard-06-chunk-0">
                 <CardHeader>
-                  <CardTitle>Orders</CardTitle>
+                  <CardTitle>Ordersd</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Table>

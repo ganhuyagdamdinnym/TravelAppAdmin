@@ -1,4 +1,5 @@
 overwrite: true
+
 schema: "http://localhost:8080/api/graphql"
 
 documents: "./src/**/*.graphql"

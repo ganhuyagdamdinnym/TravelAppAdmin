@@ -49,7 +49,10 @@ export type Mutation = {
   createTravel?: Maybe<Travel>;
   createUser: User;
   deleteProduct?: Maybe<Travel>;
+  loginUser: Scalars['String']['output'];
+  sendCodeToEmail?: Maybe<Scalars['Int']['output']>;
   updateUserInfo: User;
+  verificationCode?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -68,8 +71,23 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationLoginUserArgs = {
+  input: LoginInput;
+};
+
+
+export type MutationSendCodeToEmailArgs = {
+  input: EmailForSendingVerificationOtpInput;
+};
+
+
 export type MutationUpdateUserInfoArgs = {
   input?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationVerificationCodeArgs = {
+  input?: InputMaybe<VerificationCodeInput>;
 };
 
 export type Query = {
@@ -126,10 +144,23 @@ export type User = {
   password?: Maybe<Scalars['String']['output']>;
 };
 
+export type EmailForSendingVerificationOtpInput = {
+  email: Scalars['String']['input'];
+};
+
+export type LoginInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type RunDown = {
   __typename?: 'runDown';
   description?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+};
+
+export type VerificationCodeInput = {
+  code?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateTravelMutationVariables = Exact<{

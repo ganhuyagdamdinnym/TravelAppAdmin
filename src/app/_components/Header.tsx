@@ -13,27 +13,31 @@ export function Header() {
   console.log("s", totalProduct);
   const [activePart, setActivePart] = useState<string>("Products");
   return (
-    <div className="grid min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+    <div className="fixed z-50 bg-white border border-r border-black r-[0px] w-[260px] min-h-screen md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] ">
+      <div className="hidden border-r bg-muted/40 h-screen md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <div className="flex justify-around h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <FontAwesomeIcon icon={faMountainSun} className="mr-2" />
-              <span className="">Travel</span>
+              <FontAwesomeIcon
+                icon={faMountainSun}
+                className="mr-2 dark:text-black"
+              />
+              <span className="dark:text-black">Travel</span>
             </Link>
+            <ModeToggle />
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
                 href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all"
+                className="dark:text-black flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all"
               >
                 Dashboard
               </Link>
               <Link
                 href="/"
-                className={`mx-[-0.65rem]  ${
-                  activePart == "Products" ? " bg-muted text-black" : null
+                className={`mx-[-0.65rem] dark:text-black ${
+                  activePart == "Products" ? " bg-muted dark:text-white" : null
                 } flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground`}
                 onClick={() => setActivePart("Products")}
               >
@@ -42,8 +46,8 @@ export function Header() {
               </Link>
               <Link
                 href="/orders"
-                className={`mx-[-0.65rem]  ${
-                  activePart == "Orders" ? " bg-muted text-black" : null
+                className={`mx-[-0.65rem] dark:text-black ${
+                  activePart == "Orders" ? " bg-muted dark:text-white" : null
                 } flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground`}
                 onClick={() => setActivePart("Orders")}
               >
@@ -55,8 +59,8 @@ export function Header() {
               </Link>
               <Link
                 href="/create"
-                className={`mx-[-0.65rem]  ${
-                  activePart == "Create" ? " bg-muted text-black" : null
+                className={`mx-[-0.65rem] dark:text-black ${
+                  activePart == "Create" ? " bg-muted dark:text-white" : null
                 } flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground`}
                 onClick={() => setActivePart("Create")}
               >
@@ -65,8 +69,8 @@ export function Header() {
               </Link>
               <Link
                 href="#"
-                className={`mx-[-0.65rem]  ${
-                  activePart == "Customers" ? " bg-muted text-black" : null
+                className={`mx-[-0.65rem] dark:text-black ${
+                  activePart == "Customers" ? " bg-muted dark:text-white" : null
                 } flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground`}
                 onClick={() => setActivePart("Customers")}
               >
@@ -74,6 +78,16 @@ export function Header() {
                 Customers
               </Link>
             </nav>
+          </div>
+          <div className="text-black w-[100%] text-[34px]">
+            <div className="ml-[20px] sofia mb-[17px]">
+              <div>Safe</div>
+              <div className="ml-[20px] leading-[2px]">travels 😘</div>
+            </div>
+            <img
+              src="https://user-images.githubusercontent.com/6876788/96633009-d1818000-1318-11eb-9f1d-7f914f4ccb16.gif"
+              alt="Animated GIF"
+            />
           </div>
         </div>
       </div>

@@ -1,12 +1,14 @@
 "use client";
 import {
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { useGetAllTravelQuery } from "@/generated";
+import { GetAllTravelQuery, useGetAllTravelQuery } from "@/generated";
 // import {useGet}
 type RunDown = {
   title: string;
@@ -18,7 +20,7 @@ type InfoType = {
   note: string;
 };
 
-type ProductType = {
+export type ProductType = {
   __typename?: string;
   _id: string;
   name: string;
@@ -44,6 +46,9 @@ type ContextType = {
   products: ProductType[];
   refetch: () => void;
   totalProduct: number;
+  setProducts: Dispatch<SetStateAction<ProductType[]>>;
+
+  products2: ProductType[];
 };
 
 const ProductContext = createContext<ContextType>({} as ContextType);
@@ -55,17 +60,28 @@ export const useProduct = () => {
 const ProductProvider = ({ children }: Props) => {
   const { loading, data, error, refetch } = useGetAllTravelQuery();
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [products2, setProducts2] = useState<ProductType[]>([]);
   const [totalProduct, setTotalProduct] = useState<number>(0);
   console.log("data", data?.getAllTravel);
   useEffect(() => {
     if (data && data.getAllTravel) {
       setProducts(data.getAllTravel);
-      setTotalProduct(products.length);
+      setProducts2(data.getAllTravel);
+      setTotalProduct(products?.length);
     }
   }, [data]);
   return (
     <ProductContext.Provider
-      value={{ loading, error, products, refetch, totalProduct }}
+      value={{
+        loading,
+        error,
+        products,
+        refetch,
+        totalProduct,
+        setProducts,
+
+        products2,
+      }}
     >
       {children}
     </ProductContext.Provider>

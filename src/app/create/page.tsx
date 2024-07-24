@@ -120,7 +120,7 @@ const Create = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-row ">
+    <div className="ml-[248px] flex flex-row hide-scrollbar">
       <div className=" flex gap-6  p-8">
         <div>
           <Card>
@@ -192,8 +192,8 @@ const Create = () => {
               Please choose facilities
             </h1>
             <div className="w-full flex flex-row gap-2 flex-wrap justify-center">
-              {facilitiesData.map((facility) => (
-                <div>
+              {facilitiesData.map((facility, index) => (
+                <div key={index}>
                   {facilities.includes(facility) ? (
                     <Button
                       key={facility}
